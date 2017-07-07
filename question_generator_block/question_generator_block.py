@@ -68,6 +68,9 @@ class QuestionGeneratorXBlock(XBlock, SubmittingXBlockMixin, StudioEditableXBloc
         help="Defines when to show the 'Show/Hide Answer' button",
         default=True,
         scope=Scope.settings)
+
+    #TODO: add comments about scope of these new variables. Why these variables?
+    #
     _image_url = String (
         display_name ="image",
         help ="",
@@ -85,11 +88,13 @@ class QuestionGeneratorXBlock(XBlock, SubmittingXBlockMixin, StudioEditableXBloc
         help = "",
         default = "Given a = <a> and b = <b>. Calculate the sum, difference of a and b.",
         scope = Scope.settings)
+
     _answer_template = String (
         display_name = "Answer Template",
         help = "Teacher has to fill the answer here!!!",
         default = "x =<a> + <b>",
         scope = Scope.settings)
+
     _variables = Dict (
         display_name = "Variable List",
         help = "",

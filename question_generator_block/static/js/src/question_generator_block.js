@@ -76,7 +76,7 @@ function QuestionGeneratorXBlock(runtime, xblockElement) {
     	console.log('saved_resolver_selection: ' + data['saved_resolver_selection']);
     	
         $(xblockElement).find('input[name=submit-button]').attr('disabled','disabled'); 
-        $(xblockElement).find('input[name=submit-button]').val("Submitting")
+        $(xblockElement).find('input[name=submit-button]').val("Submitting...")
     	var handlerUrl = runtime.handlerUrl(xblockElement, 'student_submit');
     	$.post(handlerUrl, JSON.stringify(data)).success(handleSubmissionResult);
   	});

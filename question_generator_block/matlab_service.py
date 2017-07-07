@@ -22,8 +22,8 @@ def evaluate_matlab_answer(matlab_server_url, matlab_solver_url, teacherAns, stu
     
     
 if __name__ == "__main__":
-    matlab_server_url = '172.18.10.33:8080'
-    matlab_solver_url = '/solve'
+    matlab_server_url = '120.72.83.82:8080'
+    matlab_solver_url = '/check'
     
     teacherAns =  "A =[ 2, 1, 1 ; -1, 1, -1 ; 1, 2, 3] \n B = [ 2 ; 3 ; -10] \n  InvA = inv(A) \n  X=InvA * B"
 #    studentAns = "A =[ 2, 1, 1 ; -1, 1, -1 ; 1, 2, 3] \n B = [ 2 ; 3 ; -10] \n  InvA = inv(A) \n  X=InvA * B"

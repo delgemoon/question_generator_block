@@ -1,5 +1,6 @@
 from Constants import Constants
 import matlab_service
+from google_service import gsheets
 
 class resolver_machine():
     
@@ -47,6 +48,7 @@ class resolver_machine():
         return self.APIURL.NONE
     def getDefaultResolver(self):
         return self.NAME.NONE
+
     def syncCall(self, resolver, ansT, ans):
         callback = False
         if resolver == self.NAME.NONE:
@@ -55,8 +57,12 @@ class resolver_machine():
         elif resolver == self.NAME.MATLAB:
             print "self.NAME.MATLAB:"
             callback = matlab_service.evaluate_matlab_answer(self.APIAddress.MATLAB, self.APIURL.MATLAB, ansT, ans)
-        else:
+        elif resolver == self.NAME.EXCEL:
             print "self.NAME.EXCEL:"
+            my_sheet = gsheets()
+            callback = my_sheet.check_answer(ansT, ans)
+        else:
+            print "self.NAME.OTHER:"
             callback = False
         
         return callback
