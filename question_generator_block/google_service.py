@@ -23,14 +23,9 @@ from pprint import pprint
 
 # # If modifying these scopes, delete your previously saved credentials
 # # at ~/.credentials/sheets.googleapis.com-python-quickstart.json
-SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
-CLIENT_SECRET_FILE = 'google_sheets_client_secret.json'
-APPLICATION_NAME = 'Google Sheets API'
-
-# CLIENT_SECRET_FILE = '/edx/app/edxapp/google-credentials/service_account.json'
-# APPLICATION_NAME = 'Drive API Python Quickstart'
-# SCOPES = ['https://www.googleapis.com/auth/drive']
-
+# SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
+# CLIENT_SECRET_FILE = 'google_sheets_client_secret.json'
+# APPLICATION_NAME = 'Google Sheets API'
 
 
 def get_credentials():
@@ -64,16 +59,22 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def get_credentials_web_service():
 
+def get_credentials_by_service_account():
+    # use service account of Tam:
+    # CLIENT_SECRET_FILE = '/edx/app/edxapp/google-service/service-account/service_account.json'
+    # APPLICATION_NAME = 'Drive API Python Quickstart'
     # SCOPES = ['https://www.googleapis.com/auth/drive']
 
-    # CLIENT_SECRET_FILE = '/edx/app/edxapp/google/MOOC-fb91d4f340e0.json'
-    # CLIENT_SECRET_FILE = 'service_account.json'
-    # APPLICATION_NAME = 'Drive API Python Quickstart'
+    # use service account: canhdq-mooc-edx
+    CLIENT_SECRET_FILE = '/edx/app/edxapp/google-service/service-account/dqcanh-mooc-edx-gsaccount.json'
+    APPLICATION_NAME = 'Google Drive API Python'
+    SCOPES = ['https://www.googleapis.com/auth/drive']
+    print('Client secret file: ' + CLIENT_SECRET_FILE)
 
     credentials = ServiceAccountCredentials.from_json_keyfile_name(CLIENT_SECRET_FILE, scopes=SCOPES)
-    #http_auth = credentials.authorize(httplib2.Http())
+    print("credentials:")
+    pprint(credentials)
 
     return credentials
 
@@ -101,8 +102,9 @@ class gsheets():
         #     # TODO: Add desired entries to the request body.
         # }
 
-        # credentials = get_credentials()
-        credentials = get_credentials_web_service()
+        # credentials = get_credentials()   # use client ID
+        credentials = get_credentials_by_service_account()  # use service account
+
         http = credentials.authorize(httplib2.Http())
         discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
                         'version=v4')
@@ -146,8 +148,6 @@ class gsheets():
             body = body
         )
         response = request.execute()
-
-        # TODO: Change code below to process the `response` dict:
         # print('Updated answer inputs:')
         # pprint(response)
 
@@ -193,41 +193,15 @@ class gsheets():
 
 def main():
 
-    # import json
+    # """Shows basic usage of the Sheets API.
     #
-    # from httplib2 import Http
-    #
-    # from oauth2client.service_account import ServiceAccountCredentials
-    # from apiclient.discovery import build
-    #
-    # scopes = ['https://www.googleapis.com/auth/sqlservice.admin']
-    #
-    # CLIENT_SECRET_FILE = 'edx-project-24663c21e3f6.json'
-    # credentials = ServiceAccountCredentials.from_json_keyfile_name(
-    #     CLIENT_SECRET_FILE, scopes)
-    #
-    # sqladmin = build('sqladmin', 'v1beta3', credentials=credentials)
-    # response = sqladmin.instances().list(project='examinable-example-123').execute()
-    #
-    # print
-    # response
-
-    # import oauth2client.service_account
-    #
-    # jsonfile = 'edx-project-24663c21e3f6.json'
-    # # use static method .from_json_keyfile_name(filename)
-    # credentials = oauth2client.service_account.ServiceAccountCredentials.from_json_keyfile_name(jsonfile)
-
-
-    """Shows basic usage of the Sheets API.
-
-    Creates a Sheets API service object and prints the names and majors of
-    students in a sample spreadsheet:
-    https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-    """
+    # Creates a Sheets API service object and prints the names and majors of
+    # students in a sample spreadsheet:
+    # https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+    # """
     # credentials = get_credentials()
     #
-    # print('Credentials 2:')
+    # print('Credentials:')
     # pprint(credentials)
     #
     # http = credentials.authorize(httplib2.Http())
@@ -264,10 +238,9 @@ def main():
 
     print('Calling Google Spreadsheets to evaluate student answer...')
     sheets = gsheets()
-    teacher_answer = 'x=sum(3,9)'
-    student_answer = 'x = 12'
+    teacher_answer = 'x=SUM(5,9)'
+    student_answer = 'x = 5 -9'
     sheets.check_answer(teacher_answer,student_answer)
-
 
 
 
