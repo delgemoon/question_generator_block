@@ -17,7 +17,6 @@ from xblockutils.resources import ResourceLoader
 
 import matlab_service
 import qgb_question_service
-import qgb_db_service
 import json
 from resolver_machine import resolver_machine
 
@@ -144,9 +143,7 @@ class QuestionGeneratorXBlock(XBlock, SubmittingXBlockMixin, StudioEditableXBloc
     matlab_server_url = resolver_handling.getDefaultAddress()
     matlab_solver_url = resolver_handling.getDefaultURL()
     
-    #matlab_server_url = "172.18.10.33:8080" # TODO allows user to config MATLAB URL in studio
-    #matlab_solver_url = "/check"  # TODO allows user to config MATLAB URL in studio
-
+    
     def resource_string(self, path):
         """Handy helper for getting resources from our kit."""
         data = pkg_resources.resource_string(__name__, path)
@@ -274,17 +271,7 @@ class QuestionGeneratorXBlock(XBlock, SubmittingXBlockMixin, StudioEditableXBloc
         self.generated_variables = json.loads(context['serialized_generated_variables'])
     
     
-    def load_data_from_dbms(self):
-        """
-        Load question template data from MySQL
-        """
-
-        if self.xblock_id is None:
-            self.xblock_id = unicode(self.location.replace(branch=None, version=None))
-        
-        self.question_template, self.image_url, self.resolver_selection, self.variables, self.answer_template = qgb_db_service.fetch_question_template_data(self.xblock_id)
-
-
+    
     @XBlock.json_handler
     def student_submit(self, data, suffix=''):
         """
